@@ -1,10 +1,10 @@
-sorted([]).
-sorted([_]).
-sorted([X,Y|T]) :- X =< Y, sorted([Y|T]).
+isSorted([]).
+isSorted([_]).
+isSorted([X,Y|T]) :- X =< Y, issorted([Y|T]).
 
-sortedVersion(A, B) :-
+naivelySorted(A, B) :-
     permutation(A, B),
-    sorted(B).
+    isSorted(B).
 
 halfsies([], [], []).
 halfsies([X], [X], []).
@@ -20,6 +20,16 @@ mergeSorted(List, SortedList) :-
     merged(SL, SR, SortedList).
 
 merged([],L,L).
-merged(L,[],L):-L\=[].
-merged([X|TL],[Y|TR],[X|T]) :- X=<Y, merged(TL,[Y|TR],T).
-merged([X|TL],[Y|TR],[Y|T]) :- X>Y, merged([X|TL],TR,T).
+merged(L,[],L).
+merged([X|TL],[Y|TR],[X|T]) :- 
+    number(X), number(Y), X=<Y, 
+    merged(TL,[Y|TR],T).
+merged([X|TL],[Y|TR],[Y|T]) :- 
+    number(X), number(Y), X>Y, 
+    merged([X|TL],TR,T).
+
+% I guess it infinite loops if the function is correct
+checkMergeSort(L) :- 
+    L = [_|_],
+    mergeSorted(L, SortedL),
+    not(isSorted(SortedL)).

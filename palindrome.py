@@ -23,10 +23,11 @@ s.add(reverse_arr(a, rev_a, len(teststr)))
 s.check()
 m = s.model()
 py_rev_a = ''.join(chr(m.eval(rev_a[i]).as_long()) for i in range(len(teststr)))
+
 print(f"reversed: {py_rev_a}")
 
-# check if palindrome
 s.add(palindrome(a, len(teststr)))
+
 if s.check() == sat:
     print("is palindrome")
 else:
