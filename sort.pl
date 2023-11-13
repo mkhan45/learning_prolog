@@ -1,6 +1,6 @@
 isSorted([]).
 isSorted([_]).
-isSorted([X,Y|T]) :- X =< Y, issorted([Y|T]).
+isSorted([X,Y|T]) :- X =< Y, isSorted([Y|T]).
 
 naivelySorted(A, B) :-
     permutation(A, B),
@@ -27,6 +27,13 @@ merged([X|TL],[Y|TR],[X|T]) :-
 merged([X|TL],[Y|TR],[Y|T]) :- 
     number(X), number(Y), X>Y, 
     merged([X|TL],TR,T).
+
+randomList(0, []).
+randomList(N, [X|T]) :- 
+    N > 0, 
+    random(0, 1000, X), 
+    N1 is N - 1, 
+    randomList(N1, T).
 
 % I guess it infinite loops if the function is correct
 checkMergeSort(L) :- 
